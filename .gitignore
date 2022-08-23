@@ -1,0 +1,11 @@
+# macOS thing
+.DS_Store
+
+# our friend Next
+.next/
+
+# secrets
+.env*
+
+# npm
+node_modules/
