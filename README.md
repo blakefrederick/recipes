@@ -5,4 +5,4 @@
 - All recipes are vegan by default because that's all I'm interested in
 - This uses RapidAPI, don't forget to remove billing info at some point
 - This concludes the Readme
-- Tailwind exists and I'm not sure I'm fully into it yet but I will reverse judgement
+- Tailwind exists and I'm not sure I'm fully into it yet but I will reserve judgement
