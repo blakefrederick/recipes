@@ -7,10 +7,10 @@ module.exports = {
       raleway: ["Raleway", "sans-serif"],
     },
     colors: {
-      background: "#FFFFFF",
+      background: "#FFFFFA",
       primary: "#00000",
       secondary: "#9E9E9E",
-      active: "#8ec298",
+      active: "#8EC298",
     },
   },
 
