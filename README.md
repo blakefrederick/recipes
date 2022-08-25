@@ -8,6 +8,8 @@
 - Tailwind... hmm
 - Version 0.1 was called "Vegan Recipe Search" but has since been renamed 
 - Version 0.2 was called "Plant-based Recipe Search" but has since been renamed
+- Version 0.3 has been forgotten
 - This now concludes the Readme
-- Now with NEW Book Search (/books)
-- Let's say this is now Version 0.3
+- Also has Book Search (/books)
+- NOW with persistent global API credit checks to prevent unwanted billing
+- This is now Version 0.4 
