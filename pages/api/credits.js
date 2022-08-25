@@ -10,9 +10,8 @@ export default async function handler(req, res) {
   try {
     // pool.query() will escape parameterized query
     db.query(query, params, (error, result) => {
-      console.log('query', query)
-      console.log('result', result.rows)
-      const creditsRemaining = result.rows[0].count !== 'undefined' ? creditsPerDay - result.rows[0].count : 0 
+      console.log('result', result?.rows[0]?.count)
+      const creditsRemaining = result?.rows[0]?.count !==  undefined ? creditsPerDay - result.rows[0].count : 0 
       return res.status(201).send({creditsRemaining})
     })
   } catch (error) {

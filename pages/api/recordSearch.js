@@ -11,9 +11,8 @@ export default async function handler(req, res) {
 
     try {
         db.query(query, params, (error, result) => {
-        console.log('query', query)
-        console.log('result', result.rows)
-        return res.status(201).send({success: result.rows[0].id !== 'undefined' ? true : false})
+        console.log('result', result?.rows)
+        return res.status(201).send({success: result?.rows[0]?.id !== undefined ? true : false})
         })
     } catch (error) {
         console.error(error)

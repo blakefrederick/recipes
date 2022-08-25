@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     },
     headers: {
       "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-      "x-rapidapi-key": process.env.NEXT_PUBLIC_RAPIDAPI_KEY,
+      "x-rapidapi-key": process.env.RAPIDAPI_KEY,
     },
   };
 

@@ -170,6 +170,7 @@ export default function Home() {
                       <a
                         className="mt-4 text-sm text-active block"
                         href={recipe.sourceUrl}
+                        target="_blank"
                       >
                         Go to Recipe
                       </a>
