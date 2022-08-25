@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     method: "GET",
     url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search",
     params: {
-      query: req.query.keyword,
+      query: req.query.keyword ? req.query.keyword : 'Lentils',
       protein: req.query.protein ?? '',
       fat: req.query.fat ?? '',
       sugar: req.query.sugar ?? '',

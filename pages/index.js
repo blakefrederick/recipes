@@ -16,35 +16,36 @@ export default function Home() {
     try {
       setLoading(true);
       // First see if we have enough API credits to conduct the query
-      checkCredits()
-      if (numCredits > 5) {
+      const numCreditsRemaining = await getCreditsRemaining()
+      
+      if (numCreditsRemaining > 5) {
+        console.log("Conducting recipe search")
         searchRecipes()
+        setError(`Credits remaining today: ` + numCreditsRemaining)
       }
       else {
         outOfCredits()
       }
-      const { data } = res;
       setLoading(false);
-      setResponse(data.results);
     } catch (error) {
       setLoading(false);
     }
   };
 
-  const checkCredits = async () => {
+  const getCreditsRemaining = async () => {
     const credits = await axios.get("api/credits/", {
       params: { },
     });
-    console.log(credits)
-    return credits // @todo: return num credits remaining
+    console.log('credits', credits.data.creditsRemaining)
+    return credits.data.creditsRemaining 
   }
   
   const recordSearch = async () => {
-    const credits = await axios.get("api/recordSearch/", {
+    const searchRecorded = await axios.get("api/recordSearch/", {
       params: { },
     });
-    console.log(credits)
-    return credits // @todo: return true or false
+    console.log('searchRecorded', searchRecorded.data.success)
+    return searchRecorded.data.success
   }
 
   const searchRecipes = async () => {
@@ -52,6 +53,9 @@ export default function Home() {
     const res = await axios.get("api/search/", {
       params: { keyword, exclude, fat, protein, sugar },
     });
+    const { data } = res;
+    setResponse(data.results)
+    return data.results
   }
 
   const outOfCredits = async () => {
@@ -64,7 +68,7 @@ export default function Home() {
       <h2 className="text-primary text-2xl font-light mt-5">
         Search Typical recipes only. That's it. <Link href="books"><a className="underline">(and books)</a></Link>
       </h2>
-      <p className="block text-primary text-sm">Remember to conduct a maximum of 50 searches per day else it costs money.</p>
+        <p className="block text-primary text-sm">{error}</p>
       <form
         className="sm:mx-auto mt-20 md:max-w-4xl justify-center flex flex-col sm:w-full sm:flex"
         onSubmit={(e) => {
@@ -75,14 +79,13 @@ export default function Home() {
       >
         <input
           type="text"
-          className="flex w-full rounded-lg px-5 py-3 text-base font-semibold focus:outline-none focus:ring-2 focus:ring-active"
+          className="border-2 border-gray-800 flex w-full rounded-lg px-5 py-3 text-base font-semibold focus:outline-none focus:ring-2 focus:ring-active"
           placeholder="Enter a recipe"
           onChange={(e) => {
             setKeyword(e.target.value);
             setResponse(null);
           }}
         />
-        {error && <p className="error">{error}</p>}
         <div className="mt-5 flex sm:flex-row flex-col justify-start">
           <div className="sm:ml-10 sm:w-1/3 w-full">
             <label className="block text-primary text-sm">
@@ -90,7 +93,7 @@ export default function Home() {
             </label>
             <input
               type="text"
-              className="mt-1 w-full rounded-lg px-5 py-3 text-base font-bold focus:outline-none"
+              className="border-2 border-gray-800 mt-1 w-full rounded-lg px-5 py-3 text-base font-bold focus:outline-none"
               onChange={(e) => setExclude(e.target.value)}
               placeholder="flour"
             ></input>
@@ -101,7 +104,7 @@ export default function Home() {
             </label>
             <input
               type="number"
-              className="mt-1 w-full rounded-lg px-5 py-3 text-base font-bold focus:outline-none"
+              className="border-2 border-gray-800 mt-1 w-full rounded-lg px-5 py-3 text-base font-bold focus:outline-none"
               onChange={(e) => setProtein(e.target.value)}
               placeholder="10"
             ></input>
@@ -112,7 +115,7 @@ export default function Home() {
             </label>
             <input
               type="number"
-              className="mt-1 w-full rounded-lg px-5 py-3 text-base font-bold focus:outline-none"
+              className="border-2 border-gray-800 mt-1 w-full rounded-lg px-5 py-3 text-base font-bold focus:outline-none"
               onChange={(e) => setFat(e.target.value)}
               placeholder="10"
             ></input>
@@ -123,7 +126,7 @@ export default function Home() {
             </label>
             <input
               type="number"
-              className="mt-1 w-full rounded-lg px-5 py-3 text-base font-bold focus:outline-none"
+              className="border-2 border-gray-800 mt-1 w-full rounded-lg px-5 py-3 text-base font-bold focus:outline-none"
               onChange={(e) => setSugar(e.target.value)}
               placeholder="10"
             ></input>
@@ -131,7 +134,7 @@ export default function Home() {
         </div>
 
         <button
-          className="mt-5 w-full rounded-lg px-5 py-3 bg-active text-base text-primary font-bold hover:text-active hover:bg-primary transition-colors duration-300 sm:px-10"
+          className="border-2 border-gray-800 mt-5 w-full rounded-lg px-5 py-3 bg-active text-base text-primary font-bold transition-colors duration-300 sm:px-10"
           type="submit"
         >
           {loading ? <>Loading..</> : <>Search</>}
