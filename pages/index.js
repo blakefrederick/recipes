@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Link from 'next/link'
 import axios from "axios";
+import { setDefaultResultOrder } from "dns";
 
 export default function Home() {
   const [keyword, setKeyword] = useState(null);
@@ -10,13 +11,19 @@ export default function Home() {
   const [exclude, setExclude] = useState(null);
   const [response, setResponse] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const getRecipes = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("api/search/", {
-        params: { keyword, exclude, fat, protein, sugar },
-      });
+      // First see if we have enough API credits to conduct the query
+      checkCredits()
+      if (numCredits > 5) {
+        searchRecipes()
+      }
+      else {
+        outOfCredits()
+      }
       const { data } = res;
       setLoading(false);
       setResponse(data.results);
@@ -24,6 +31,33 @@ export default function Home() {
       setLoading(false);
     }
   };
+
+  const checkCredits = async () => {
+    const credits = await axios.get("api/credits/", {
+      params: { },
+    });
+    console.log(credits)
+    return credits // @todo: return num credits remaining
+  }
+  
+  const recordSearch = async () => {
+    const credits = await axios.get("api/recordSearch/", {
+      params: { },
+    });
+    console.log(credits)
+    return credits // @todo: return true or false
+  }
+
+  const searchRecipes = async () => {
+    recordSearch()
+    const res = await axios.get("api/search/", {
+      params: { keyword, exclude, fat, protein, sugar },
+    });
+  }
+
+  const outOfCredits = async () => {
+    setError('Out of credits!')
+  }
 
   return (
     <div className="flex flex-col md:px-12 px-0 relative bg-background font-raleway items-center min-h-screen">
@@ -49,6 +83,7 @@ export default function Home() {
             setResponse(null);
           }}
         />
+        {error && <p className="error">{error}</p>}
         <div className="mt-5 flex sm:flex-row flex-col justify-start">
           <div className="sm:ml-10 sm:w-1/3 w-full">
             <label className="block text-primary text-sm">
