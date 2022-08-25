@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Link from 'next/link'
 import axios from "axios";
-import { setDefaultResultOrder } from "dns";
 
 export default function Home() {
   const [keyword, setKeyword] = useState(null);
