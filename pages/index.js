@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { useState, useRouter } from "react";
 import Link from 'next/link'
 import axios from "axios";
 
 export default function Home() {
-  const [keyword, setKeyword] = useState(null);
-  const [fat, setFat] = useState(null);
-  const [protein, setProtein] = useState(null);
-  const [sugar, setSugar] = useState(null);
-  const [exclude, setExclude] = useState(null);
-  const [response, setResponse] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [keyword, setKeyword] = useState(null)
+  const [fat, setFat] = useState(null)
+  const [protein, setProtein] = useState(null)
+  const [sugar, setSugar] = useState(null)
+  const [exclude, setExclude] = useState(null)
+  const [response, setResponse] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+  const { basePath } = useRouter()
 
   const getRecipes = async () => {
     try {
-      setLoading(true);
+      setLoading(true)
       // First see if we have enough API credits to conduct the query
       const numCreditsRemaining = await getCreditsRemaining()
       
@@ -26,14 +27,14 @@ export default function Home() {
       else {
         outOfCredits()
       }
-      setLoading(false);
+      setLoading(false)
     } catch (error) {
-      setLoading(false);
+      setLoading(false)
     }
   };
 
   const getCreditsRemaining = async () => {
-    const credits = await axios.get(process.env.BASEPATH + "/api/credits/", {
+    const credits = await axios.get(`${basePath}//api/credits/`, {
       params: { },
     });
     console.log('credits', credits.data.creditsRemaining)
@@ -41,7 +42,7 @@ export default function Home() {
   }
   
   const recordSearch = async () => {
-    const searchRecorded = await axios.get(process.env.BASEPATH + "api/recordSearch/", {
+    const searchRecorded = await axios.get(`${basePath}/api/recordSearch/`, {
       params: { },
     });
     console.log('searchRecorded', searchRecorded.data.success)
@@ -50,7 +51,7 @@ export default function Home() {
 
   const searchRecipes = async () => {
     recordSearch()
-    const res = await axios.get(process.env.BASEPATH + "api/search/", {
+    const res = await axios.get(`${basePath}/api/search/`, {
       params: { keyword, exclude, fat, protein, sugar },
     });
     const { data } = res;
@@ -73,8 +74,8 @@ export default function Home() {
         className="sm:mx-auto mt-20 md:max-w-4xl justify-center flex flex-col sm:w-full sm:flex"
         onSubmit={(e) => {
           getRecipes();
-          e.preventDefault();
-          e.stopPropagation();
+          e.preventDefault()
+          e.stopPropagation()
         }}
       >
         <input
@@ -82,8 +83,8 @@ export default function Home() {
           className="border-2 border-gray-800 flex w-full rounded-lg px-5 py-3 text-base font-semibold focus:outline-none focus:ring-2 focus:ring-active"
           placeholder="Enter a recipe"
           onChange={(e) => {
-            setKeyword(e.target.value);
-            setResponse(null);
+            setKeyword(e.target.value)
+            setResponse(null)
           }}
         />
         <div className="mt-5 flex sm:flex-row flex-col justify-start">

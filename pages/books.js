@@ -1,24 +1,27 @@
-import { useState } from "react";
+import { useState, useRouter } from "react";
 import Link from 'next/link'
 import axios from "axios";
 
+
 export default function Home() {
-  const [keyword, setKeyword] = useState(null);
-  const [response, setResponse] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [keyword, setKeyword] = useState(null)
+  const [response, setResponse] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const { basePath } = useRouter()
+
 
   const getBooks = async () => {
     try {
-      setLoading(true);
-      const res = await axios.get(process.env.BASEPATH + "/api/books/search/", {
+      setLoading(true)
+      const res = await axios.get(`${basePath}/api/books/search/`, {
         params: { keyword },
       });
-      const { data } = res;
-      setLoading(false);
+      const { data } = res
+      setLoading(false)
       console.log(data)
-      setResponse(data);
+      setResponse(data)
     } catch (error) {
-      setLoading(false);
+      setLoading(false)
     }
   };
 
@@ -33,8 +36,8 @@ export default function Home() {
         className="sm:mx-auto mt-20 md:max-w-4xl justify-center flex flex-col sm:w-full sm:flex"
         onSubmit={(e) => {
           getBooks();
-          e.preventDefault();
-          e.stopPropagation();
+          e.preventDefault()
+          e.stopPropagation()
         }}
       >
         <input
@@ -42,8 +45,8 @@ export default function Home() {
           className="border-[#333333] flex w-full rounded-lg px-5 py-3 text-base font-semibold focus:outline-none focus:ring-2 focus:ring-active"
           placeholder="Enter a book title, author"
           onChange={(e) => {
-            setKeyword(e.target.value);
-            setResponse(null);
+            setKeyword(e.target.value)
+            setResponse(null)
           }}
         />
         <div className="mt-5 flex sm:flex-row flex-col justify-start">
