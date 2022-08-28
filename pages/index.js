@@ -33,7 +33,7 @@ export default function Home() {
   };
 
   const getCreditsRemaining = async () => {
-    const credits = await axios.get("api/credits/", {
+    const credits = await axios.get(process.env.BASEPATH + "/api/credits/", {
       params: { },
     });
     console.log('credits', credits.data.creditsRemaining)
@@ -41,7 +41,7 @@ export default function Home() {
   }
   
   const recordSearch = async () => {
-    const searchRecorded = await axios.get("api/recordSearch/", {
+    const searchRecorded = await axios.get(process.env.BASEPATH + "api/recordSearch/", {
       params: { },
     });
     console.log('searchRecorded', searchRecorded.data.success)
@@ -50,7 +50,7 @@ export default function Home() {
 
   const searchRecipes = async () => {
     recordSearch()
-    const res = await axios.get("api/search/", {
+    const res = await axios.get(process.env.BASEPATH + "api/search/", {
       params: { keyword, exclude, fat, protein, sugar },
     });
     const { data } = res;

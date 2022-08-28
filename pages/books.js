@@ -10,7 +10,7 @@ export default function Home() {
   const getBooks = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("api/books/search/", {
+      const res = await axios.get(process.env.BASEPATH + "/api/books/search/", {
         params: { keyword },
       });
       const { data } = res;
