@@ -1,4 +1,5 @@
-import { useState, useRouter } from "react";
+import { useState } from "react";
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import axios from "axios";
 
@@ -31,12 +32,12 @@ export default function Home() {
     } catch (error) {
       setLoading(false)
     }
-  };
+  }
 
   const getCreditsRemaining = async () => {
     const credits = await axios.get(`${basePath}//api/credits/`, {
       params: { },
-    });
+    })
     console.log('credits', credits.data.creditsRemaining)
     return credits.data.creditsRemaining 
   }
@@ -44,7 +45,7 @@ export default function Home() {
   const recordSearch = async () => {
     const searchRecorded = await axios.get(`${basePath}/api/recordSearch/`, {
       params: { },
-    });
+    })
     console.log('searchRecorded', searchRecorded.data.success)
     return searchRecorded.data.success
   }
@@ -53,7 +54,7 @@ export default function Home() {
     recordSearch()
     const res = await axios.get(`${basePath}/api/search/`, {
       params: { keyword, exclude, fat, protein, sugar },
-    });
+    })
     const { data } = res;
     setResponse(data.results)
     return data.results
@@ -67,7 +68,7 @@ export default function Home() {
     <div className="flex flex-col md:px-12 px-0 relative bg-background font-raleway items-center min-h-screen">
       <h1 className="text-6xl font-bold text-active mt-20">Typical Recipe Search</h1>
       <h2 className="text-primary text-2xl font-light mt-5">
-        Search Typical recipes only. That's it. <Link href="books"><a className="underline">(and books)</a></Link>
+        Just a typical recipe search. That's it. <Link href="/books"><a className="underline">(and books)</a></Link>
       </h2>
         <p className="block text-primary text-sm">{error}</p>
       <form
