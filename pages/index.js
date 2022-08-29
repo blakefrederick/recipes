@@ -1,7 +1,24 @@
 import { useState } from "react";
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import axios from "axios";
+import axios from "axios"
+
+import styled from 'styled-components'
+const Button = styled.button`
+  margin: 40px auto;
+  padding: 5px;
+  border-radius: 3px;
+  width: 175px;
+  font-size: 16px;
+  text-align: center;
+  color: #222222;
+  background-color: ${props => props.backgroundColor};
+
+  &:hover {
+    color: ${props => props.hoverColor};
+    filter: brightness(1.15);
+  }
+`
 
 export default function Home() {
   const [keyword, setKeyword] = useState(null)
@@ -13,6 +30,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const { basePath } = useRouter()
+  
 
   const getRecipes = async () => {
     try {
@@ -91,7 +109,7 @@ export default function Home() {
         <div className="mt-5 flex sm:flex-row flex-col justify-start">
           <div className="sm:ml-10 sm:w-1/3 w-full">
             <label className="block text-primary text-sm">
-              Exclude Ingredients
+              Don't want
             </label>
             <input
               type="text"
@@ -102,7 +120,7 @@ export default function Home() {
           </div>
           <div className="sm:ml-10 sm:w-1/3 w-full">
             <label className="block text-primary text-sm">
-              Protein (minimum, grams)
+              Protein min g
             </label>
             <input
               type="number"
@@ -113,7 +131,7 @@ export default function Home() {
           </div>
           <div className="sm:ml-10 sm:w-1/3 w-full">
             <label className="block text-primary text-sm">
-              Fat (minimum, grams)
+              Fat min g
             </label>
             <input
               type="number"
@@ -124,7 +142,7 @@ export default function Home() {
           </div>
           <div className="sm:ml-10 sm:w-1/3 w-full">
             <label className="block text-primary text-sm">
-              Sugar (maximum, grams)
+              Sugar max g
             </label>
             <input
               type="number"
@@ -135,12 +153,14 @@ export default function Home() {
           </div>
         </div>
 
-        <button
-          className="border-2 border-gray-800 mt-5 w-full rounded-lg px-5 py-3 bg-active text-base text-primary font-bold transition-colors duration-300 sm:px-10"
+        <Button
+          className=""
           type="submit"
+          hoverColor="black"
+          backgroundColor="rgba(142, 194, 152, 0.6)"
         >
           {loading ? <>Loading..</> : <>Search</>}
-        </button>
+        </Button>
       </form>
       {response && (
         <div className="mt-10">
