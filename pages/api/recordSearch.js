@@ -2,12 +2,19 @@ import db from '../../lib/postgres'
 
 export default async function handler(req, res) {
 
+    const ip =
+    req.ip ||
+    req.headers['cf-connecting-ip'] ||
+    req.headers['x-forwarded-for'] ||
+    req.headers['x-real-ip'] ||
+    req.connection?.remoteAddress
+
     const endpointHost = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
     const query = `INSERT INTO blakefrederick \
-    (endpoint, time) \
-    VALUES ($1, date(timezone('PST', now())))
+    (endpoint, ip, time) \
+    VALUES ($1, $2, NOW())
     RETURNING id`
-    const params = [endpointHost]
+    const params = [endpointHost, ip]
 
     try {
         db.query(query, params, (error, result) => {

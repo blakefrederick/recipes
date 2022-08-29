@@ -56,7 +56,7 @@ export default function Home() {
       params: { keyword, exclude, fat, protein, sugar },
     })
     const { data } = res;
-    setResponse(data.results)
+    setResponse(data.results.length > 0 ? data.results : "Sorry, no results for that search term!")
     return data.results
   }
 
@@ -82,7 +82,7 @@ export default function Home() {
         <input
           type="text"
           className="border-2 border-gray-800 flex w-full rounded-lg px-5 py-3 text-base font-semibold focus:outline-none focus:ring-2 focus:ring-active"
-          placeholder="Enter a recipe"
+          placeholder="Describe what you want"
           onChange={(e) => {
             setKeyword(e.target.value)
             setResponse(null)
