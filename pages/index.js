@@ -2,16 +2,47 @@ import { useState } from "react";
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import axios from "axios"
+import styled, { keyframes } from 'styled-components'
 
-import styled from 'styled-components'
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`
+
+// Here we create a component that will rotate everything we pass in over two seconds
+const Rotate = styled.div`
+  display: inline-block;
+  animation: ${rotate} 4s linear infinite;
+  padding: 1rem 1rem;
+  font-size: 5rem;
+`
+
 const Button = styled.button`
   margin: 40px auto;
   padding: 5px;
   border-radius: 3px;
+  border: 2px solid black;
+  font-weight: 900;
   width: 175px;
   font-size: 16px;
   text-align: center;
   color: #222222;
+  background-color: ${props => props.backgroundColor};
+
+  &:hover {
+    color: ${props => props.hoverColor};
+    filter: brightness(1.15);
+  }
+`
+
+const Title = styled.h1 `
+  margin: 40px auto;
+  font-size: 2rem;
   background-color: ${props => props.backgroundColor};
 
   &:hover {
@@ -84,7 +115,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col md:px-12 px-0 relative bg-background font-raleway items-center min-h-screen">
-      <h1 className="text-6xl font-bold text-active mt-20">Typical Recipe Search</h1>
+      <Title>Recipe Search</Title>
       <h2 className="text-primary text-2xl font-light mt-5">
         Just a typical recipe search. That's it. {/* <Link href="/books"><a className="underline">(and books)</a></Link> */}
       </h2>
@@ -204,6 +235,7 @@ export default function Home() {
           </div>
         </div>
       )}
+      <Rotate>🥘</Rotate>
     </div>
   );
 }
