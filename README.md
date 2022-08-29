@@ -13,3 +13,4 @@
 - Also has Book Search (/books)
 - NOW with persistent global API credit checks to prevent unwanted billing
 - This is now Version 0.4 
+- Theme needs improvement
