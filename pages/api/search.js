@@ -1,6 +1,8 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
+
+  // Record search here so it cannot be manipulated, bypassed client-side
   const options = {
     method: "GET",
     url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search",

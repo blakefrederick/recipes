@@ -30,9 +30,11 @@ export default function Home() {
     <div className="flex flex-col md:px-12 px-0 relative bg-background font-raleway items-center min-h-screen">
       <h1 className="text-6xl font-bold text-active mt-20 text-[#602F6B]">Books</h1>
       <h2 className="text-primary text-2xl font-light mt-5">
-        Search books. <Link href="/"><a className="underline">(or plants)</a></Link>
+        Search books.
       </h2>
+      <p><Link href="/"><a className="underline small">(or recipes)</a></Link></p>
       <p className="block text-primary text-sm text-[#602F6B]">Max 100 searches per month, unfortunately.</p>
+      <p className="md:px-12"></p>
       <form
         className="sm:mx-auto mt-20 md:max-w-4xl justify-center flex flex-col sm:w-full sm:flex"
         onSubmit={(e) => {
@@ -89,6 +91,7 @@ export default function Home() {
                       <a
                         className="mt-4 text-sm text-active block"
                         href={book.url}
+                        target="_blank"
                       >
                         Goodreads
                       </a>
