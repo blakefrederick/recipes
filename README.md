@@ -14,3 +14,5 @@
 - NOW with persistent global API credit checks to prevent unwanted billing
 - This is now Version 0.4 
 - Theme needs improvement
+- Tailwind update:
+<img width="865" alt="tailwind" src="https://user-images.githubusercontent.com/4672139/187130936-222f3c71-4f30-4706-b464-5826ea416b19.png">
