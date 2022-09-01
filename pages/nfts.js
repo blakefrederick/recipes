@@ -1,62 +1,66 @@
-import axios from "axios";
-import { useState } from "react";
+import axios from "axios"
+import { useRouter } from 'next/router'
+import { useState } from "react"
 
 export default function Home() {
-  const [title, setTitle] = useState("bored ape");
-  const [searchResults, setSearchResults] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [title, setTitle] = useState("bored ape")
+  const [searchResults, setSearchResults] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const { basePath } = useRouter()
 
   const getResults = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("api/search/", {
+      const res = await axios.get(`${basePath}/api/nfts/nftSearch/`, {
         params: { title },
       });
-      const data = filterData(res.data.result);
-      setSearchResults(data); // Add the data to the results state
-      setLoading(false);
+      const data = filterData(res.data.result)
+      setSearchResults(data)
+      setLoading(false)
     } catch (error) {
-      setLoading(false);
+      setLoading(false)
     }
   };
 
   const filterData = (results) => {
-    results = results.slice(0, 30); // Take only the first 30 results
+    results = results.slice(0, 30) // Take only the first 30 results
     results.filter((result) => {
-      result.metadata = JSON.parse(result.metadata); // Parse string into JS object
+      result.metadata = JSON.parse(result.metadata)
     });
-    return results;
+    return results
   };
 
   return (
     <div className="flex flex-col md:px-12 px-4 bg-background font-spacemono items-center min-h-screen">
       <h1 className="md:text-6xl text-4xl font-bold text-primary mt-10">
-        <span className="text-active">NFT</span> Explorer
+        <span className="text-active">NFT</span> Search
       </h1>
       <h2 className="text-primary text-2xl font-light mt-6 font-ebas">
-        Search for NFT collections in 20+ networks
+        Search for NFTs on ETH
       </h2>
       <form
         className="sm:mx-auto mt-10 justify-center sm:w-full sm:flex"
         onSubmit={(e) => {
-          getResults();
-          e.preventDefault();
-          e.stopPropagation();
+          getResults()
+          e.preventDefault()
+          e.stopPropagation()
         }}
       >
         <input
+          style={{color:'purple', border: '2px solid purple'}}
           type="text"
           className="flex w-full sm:w-1/3 rounded-lg px-5 py-3 text-base text-background font-semibold focus:outline-none focus:ring-2 focus:ring-active"
           placeholder="Enter the NFT collection name"
           defaultValue={title}
           onChange={(e) => {
-            setTitle(e.target.value);
-            setSearchResults(null);
+            setTitle(e.target.value)
+            setSearchResults(null)
           }}
         />
 
         <div className="mt-4 sm:mt-0 sm:ml-3">
           <button
+            style={{color:'purple', border: '2px solid purple', background: 'white'}}
             className="block w-full rounded-lg px-5 py-3 bg-active text-base text-primary font-bold focus:outline-none focus:ring-2 focus:ring-primary sm:px-10"
             type="submit"
           >
@@ -112,18 +116,6 @@ export default function Home() {
           </div>
         </div>
       )}
-
-      <div className="mt-20 mb-10 text-center">
-        <p className="text-primary text-xs">
-          Made by RapidAPI DevRel Team -{" "}
-          <a
-            className="hover:text-active"
-            href="https://github.com/RapidAPI/DevRel-Examples-External"
-          >
-            See more examples like this
-          </a>
-        </p>
-      </div>
     </div>
   );
 }

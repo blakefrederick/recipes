@@ -84,7 +84,7 @@ export default function Home() {
   }
 
   const getCreditsRemaining = async () => {
-    const credits = await axios.get(`${basePath}//api/credits/`, {
+    const credits = await axios.get(`${basePath}/api/credits/`, {
       params: { },
     })
     console.log('credits', credits.data.creditsRemaining)

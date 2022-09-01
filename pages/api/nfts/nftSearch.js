@@ -7,7 +7,6 @@ export default async function handler(req, res) {
     params: {
       chain: "eth",
       filter: "name,attributes",
-      offset: "0",
       q: req.query.title,
     },
     headers: {
