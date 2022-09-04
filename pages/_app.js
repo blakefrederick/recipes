@@ -34,7 +34,7 @@ function Recipes({ Component, pageProps }) {
         <title>Recipes</title>
         <meta
           httpEquiv="Content-Security-Policy"
-          content="img-src 'self' 'unsafe-inline' 'unsafe-eval' connect.facebook.net www.gstatic.com www.google.com www.google.ca www.google-analytics.com www.google.com www.googletagmanager.com ajax.googleapis.com blob: data:;"
+          content="script-src: 'unsafe-inline' https://www.googletagmanager.com img-src: www.googletagmanager.com"
         />
         <link rel="icon" href="/favicon.ico" />
         <link
