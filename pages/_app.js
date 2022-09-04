@@ -5,6 +5,19 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=GTM-KKF7ZXT`} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'GTM-KKF7ZXT', {
+                page_path: window.location.pathname,
+              });
+            `,
+          }}
+        />
         <title>Recipes</title>
         <link rel="icon" href="/favicon.ico" />
         <link
