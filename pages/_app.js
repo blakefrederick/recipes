@@ -1,10 +1,11 @@
 import Head from "next/head";
 import "tailwindcss/tailwind.css";
 
-function MyApp({ Component, pageProps }) {
+function Recipes({ Component, pageProps }) {
   return (
     <>
       <Head>
+        {/* Google Tag Manager Container */}
         <script async src={`https://www.googletagmanager.com/gtag/js?id=GTM-KKF7ZXT`} />
         <script
           dangerouslySetInnerHTML={{
@@ -15,6 +16,18 @@ function MyApp({ Component, pageProps }) {
               gtag('config', 'GTM-KKF7ZXT', {
                 page_path: window.location.pathname,
               });
+            `,
+          }}
+        />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-DN364JHX07"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+    
+              gtag('config', 'G-DN364JHX07');
             `,
           }}
         />
@@ -30,4 +43,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default Recipes;
