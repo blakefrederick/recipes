@@ -17,7 +17,7 @@ const rotate = keyframes`
 // Here we create a component that will rotate everything we pass in over two seconds
 const Rotate = styled.div`
   display: inline-block;
-  animation: ${rotate} 4s linear infinite;
+  animation: ${rotate} 10s linear infinite;
   padding: 1rem 1rem;
   font-size: 5rem;
 `
@@ -104,9 +104,14 @@ export default function Home() {
     const res = await axios.get(`${basePath}/api/search/`, {
       params: { keyword, exclude, fat, protein, sugar },
     })
-    const { data } = res;
-    setResponse(data.results.length > 0 ? data.results : "Sorry, no results for that search term!")
-    return data.results
+    const { data } = res
+
+    if (data.results.length > 0) {
+      setResponse(data.results)
+    }
+    else {
+      setError("Sorry, no results for that search term!")
+    }
   }
 
   const outOfCredits = async () => {
@@ -119,13 +124,14 @@ export default function Home() {
       <h2 className="text-primary text-2xl font-light mt-5">
         Just a typical recipe search. That's it. {/* <Link href="/books"><a className="underline">(and books)</a></Link> */}
       </h2>
-        <p className="block text-primary text-sm">{error}</p>
+        <p className="block text-primary text-sm" style={{color: 'red', marginTop: '20px', fontSize: '1.2rem'}}>{error}</p>
       <form
         className="sm:mx-auto mt-20 md:max-w-4xl justify-center flex flex-col sm:w-full sm:flex"
-        onSubmit={(e) => {
-          getRecipes();
+        onSubmit={(e) => {  
           e.preventDefault()
+          e.target.reset()
           e.stopPropagation()
+          getRecipes()
         }}
       >
         <input
