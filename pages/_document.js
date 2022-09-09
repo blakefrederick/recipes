@@ -5,16 +5,14 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-
         {/* GTM Web Container (must appear in body, not head) */}
         <noscript
-            dangerouslySetInnerHTML={{
-              __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KKF7ZXT"
+          dangerouslySetInnerHTML={{
+            __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KKF7ZXT"
                   height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
-            }}
-          />
+          }}
+        />
         <Head>
-
           {/* Security */}
           <meta
             httpEquiv="Content-Security-Policy"
@@ -68,8 +66,7 @@ export default class MyDocument extends Document {
     try {
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: (App) => (props) =>
-            sheet.collectStyles(<App {...props} />),
+          enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
         })
 
       const initialProps = await Document.getInitialProps(ctx)

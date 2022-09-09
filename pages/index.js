@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import axios from "axios"
+import axios from 'axios'
 import styled, { keyframes } from 'styled-components'
 
 const rotate = keyframes`
@@ -32,21 +32,21 @@ const Button = styled.button`
   font-size: 16px;
   text-align: center;
   color: #222222;
-  background-color: ${props => props.backgroundColor};
+  background-color: ${(props) => props.backgroundColor};
 
   &:hover {
-    color: ${props => props.hoverColor};
+    color: ${(props) => props.hoverColor};
     filter: brightness(1.15);
   }
 `
 
-const Title = styled.h1 `
+const Title = styled.h1`
   margin: 40px auto;
   font-size: 2rem;
-  background-color: ${props => props.backgroundColor};
+  background-color: ${(props) => props.backgroundColor};
 
   &:hover {
-    color: ${props => props.hoverColor};
+    color: ${(props) => props.hoverColor};
     filter: brightness(1.15);
   }
 `
@@ -61,20 +61,18 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const { basePath } = useRouter()
-  
 
   const getRecipes = async () => {
     try {
       setLoading(true)
       // First see if we have enough API credits to conduct the query
       const numCreditsRemaining = await getCreditsRemaining()
-      
+
       if (numCreditsRemaining > 5) {
-        console.log("Conducting recipe search")
+        console.log('Conducting recipe search')
         searchRecipes()
         setError(`Credits remaining today: ` + numCreditsRemaining)
-      }
-      else {
+      } else {
         outOfCredits()
       }
       setLoading(false)
@@ -85,15 +83,15 @@ export default function Home() {
 
   const getCreditsRemaining = async () => {
     const credits = await axios.get(`${basePath}/api/credits/`, {
-      params: { },
+      params: {},
     })
     console.log('credits', credits.data.creditsRemaining)
-    return credits.data.creditsRemaining 
+    return credits.data.creditsRemaining
   }
-  
+
   const recordSearch = async () => {
     const searchRecorded = await axios.get(`${basePath}/api/recordSearch/`, {
-      params: { },
+      params: {},
     })
     console.log('searchRecorded', searchRecorded.data.success)
     return searchRecorded.data.success
@@ -108,9 +106,8 @@ export default function Home() {
 
     if (data.results.length > 0) {
       setResponse(data.results)
-    }
-    else {
-      setError("Sorry, no results for that search term!")
+    } else {
+      setError('Sorry, no results for that search term!')
     }
   }
 
@@ -122,12 +119,15 @@ export default function Home() {
     <div className="flex flex-col md:px-12 px-0 relative bg-background font-raleway items-center min-h-screen">
       <Title>Recipe Search</Title>
       <h2 className="text-primary text-2xl font-light mt-5">
-        Just a typical recipe search. That's it. {/* <Link href="/books"><a className="underline">(and books)</a></Link> */}
+        Just a typical recipe search. That's it.{' '}
+        {/* <Link href="/books"><a className="underline">(and books)</a></Link> */}
       </h2>
-        <p className="block text-primary text-sm" style={{color: 'red', marginTop: '20px', fontSize: '1.2rem'}}>{error}</p>
+      <p className="block text-primary text-sm" style={{ color: 'red', marginTop: '20px', fontSize: '1.2rem' }}>
+        {error}
+      </p>
       <form
         className="sm:mx-auto mt-20 md:max-w-4xl justify-center flex flex-col sm:w-full sm:flex"
-        onSubmit={(e) => {  
+        onSubmit={(e) => {
           e.preventDefault()
           e.target.reset()
           e.stopPropagation()
@@ -145,9 +145,7 @@ export default function Home() {
         />
         <div className="mt-5 flex sm:flex-row flex-col justify-start">
           <div className="sm:ml-10 sm:w-1/3 w-full">
-            <label className="block text-primary text-sm">
-              Don't want
-            </label>
+            <label className="block text-primary text-sm">Don't want</label>
             <input
               type="text"
               className="border-2 border-gray-800 mt-1 w-full rounded-lg px-5 py-3 text-base font-bold focus:outline-none"
@@ -156,9 +154,7 @@ export default function Home() {
             ></input>
           </div>
           <div className="sm:ml-10 sm:w-1/3 w-full">
-            <label className="block text-primary text-sm">
-              Protein min g
-            </label>
+            <label className="block text-primary text-sm">Protein min g</label>
             <input
               type="number"
               className="border-2 border-gray-800 mt-1 w-full rounded-lg px-5 py-3 text-base font-bold focus:outline-none"
@@ -167,9 +163,7 @@ export default function Home() {
             ></input>
           </div>
           <div className="sm:ml-10 sm:w-1/3 w-full">
-            <label className="block text-primary text-sm">
-              Fat min g
-            </label>
+            <label className="block text-primary text-sm">Fat min g</label>
             <input
               type="number"
               className="border-2 border-gray-800 mt-1 w-full rounded-lg px-5 py-3 text-base font-bold focus:outline-none"
@@ -178,9 +172,7 @@ export default function Home() {
             ></input>
           </div>
           <div className="sm:ml-10 sm:w-1/3 w-full">
-            <label className="block text-primary text-sm">
-              Sugar max g
-            </label>
+            <label className="block text-primary text-sm">Sugar max g</label>
             <input
               type="number"
               className="border-2 border-gray-800 mt-1 w-full rounded-lg px-5 py-3 text-base font-bold focus:outline-none"
@@ -190,12 +182,7 @@ export default function Home() {
           </div>
         </div>
 
-        <Button
-          className=""
-          type="submit"
-          hoverColor="black"
-          backgroundColor="rgba(142, 194, 152, 0.6)"
-        >
+        <Button className="" type="submit" hoverColor="black" backgroundColor="rgba(142, 194, 152, 0.6)">
           {loading ? <>Loading..</> : <>Search</>}
         </Button>
       </form>
@@ -209,10 +196,7 @@ export default function Home() {
                     <div className="flex items-center justify-center">
                       <span className="p-2">
                         <img
-                          src={
-                            `https://spoonacular.com/recipeImages/` +
-                            recipe.image
-                          }
+                          src={`https://spoonacular.com/recipeImages/` + recipe.image}
                           className="w-full h-full rounded-lg"
                           alt={recipe.id}
                         />
@@ -223,13 +207,13 @@ export default function Home() {
                         {recipe.title}
                       </h3>
                       <span className="mt-2 text-sm text-secondary block">
-                        Ready in {recipe.readyInMinutes} minutes -{" "}
-                        {recipe.servings} Servings
+                        Ready in {recipe.readyInMinutes} minutes - {recipe.servings} Servings
                       </span>
                       <a
                         className="mt-4 text-sm text-active block"
                         href={recipe.sourceUrl}
                         target="_blank"
+                        rel="noreferrer"
                       >
                         Go to Recipe
                       </a>
@@ -243,5 +227,5 @@ export default function Home() {
       )}
       <Rotate>🥘</Rotate>
     </div>
-  );
+  )
 }

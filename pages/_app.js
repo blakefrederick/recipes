@@ -1,14 +1,13 @@
-import Head from "next/head";
-import "tailwindcss/tailwind.css";
+import Head from 'next/head'
+import 'tailwindcss/tailwind.css'
 
 function Recipes({ Component, pageProps }) {
   return (
     <>
-      <Head>
-      </Head>
+      <Head></Head>
       <Component {...pageProps} />
     </>
-  );
+  )
 }
 
-export default Recipes;
+export default Recipes

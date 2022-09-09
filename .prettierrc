@@ -1,0 +1,32 @@
+{
+  "overrides": [
+    {
+      "files": "*.php",
+      "options": {
+        "printWidth": 80,
+        "tabWidth": 4,
+        "useTabs": false,
+        "singleQuote": false,
+        "phpVersion": "7.3",
+        "trailingCommaPHP": true,
+        "braceStyle": "psr-2",
+        "requirePragma": false,
+        "insertPragma": false
+      }
+    },
+    {
+      "files": "*.json",
+      "options": {
+        "tabWidth": 2,
+        "useTabs": false
+      }
+    },
+    {
+      "files": "*.css",
+      "options": {
+        "tabWidth": 4,
+        "useTabs": false
+      }
+    }
+  ]
+}
